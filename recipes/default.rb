@@ -3,11 +3,11 @@
 case node[:platform]
 when 'debian', 'ubuntu'
   file = '/usr/local/bin/aws'
-  cmd = 'apt-get install -y python-pip && pip install awscli'
+  cmd = 'pip install awscli'
   completion_file = '/etc/bash_completion.d/aws'
 when 'redhat', 'centos', 'fedora', 'amazon', 'scientific'
   file = '/usr/bin/aws'
-  cmd = 'yum -y install python-pip && pip install awscli'
+  cmd = 'pip install awscli'
 end
 r = execute 'install awscli' do
   command cmd
@@ -31,11 +31,7 @@ if node[:awscli][:config_profiles]
   end
 
   config_profiles_by_user.each do |(user, config_profiles)|
-    if user == 'root'
-      config_file = "/#{user}/.aws/config"
-    else
-      config_file = "/home/#{user}/.aws/config"
-    end
+      config_file = File.join(Dir.home(user), '.aws', 'config')
 
     r = directory ::File.dirname(config_file) do
       recursive true

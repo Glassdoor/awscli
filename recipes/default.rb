@@ -31,7 +31,7 @@ if node[:awscli][:config_profiles]
   end
 
   config_profiles_by_user.each do |(user, config_profiles)|
-      config_file = File.join(Dir.home(user), '.aws', 'config')
+    config_file = ::File.join((node[:etc][:passwd][user][:dir] rescue "/home/#{user}"), '.aws', 'config')
 
     r = directory ::File.dirname(config_file) do
       recursive true

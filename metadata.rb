@@ -4,7 +4,7 @@ maintainer_email 'shlomo.swidler@orchestratus.com'
 license          'Apache 2.0'
 description      'Installs the AWS command line tools'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version          '0.4.4'
+version          '0.4.6'
 
 recipe "default", "Install AWS CLI tools"
 
